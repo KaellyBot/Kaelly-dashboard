@@ -1,7 +1,7 @@
 {
-  "name": "ticketmanager",
+  "name": "kaelly-dashboard",
   "version": "1.0.0",
-  "description": "manager to manage tickets",
+  "description": "Dashboard to manage kaelly's configuration",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
