@@ -3,6 +3,7 @@ const HAS_USER_GET_ADMIN_PERMISSION = require('./util/administrator-perm');
 const EXPRESS = require('express');
 const AXIOS = require('axios');
 const HELMET = require('helmet');
+const MORGAN = require('morgan');
 const SESSION = require('express-session');
 const APP = EXPRESS();
 require('dotenv').config();
@@ -19,6 +20,7 @@ const TOKEN_URL = API_BASE_URL + '/oauth2/token'
 const KAELLYBOT_TOKEN = process.env.KAELLY_TOKEN;
 const KAELLY_DASHBOARD_TOKEN = Buffer.from(`${OAUTH2_CLIENT_ID}:${OAUTH2_CLIENT_SECRET}`, 'utf8').toString('base64');
 const MONGO_URL = process.env.MONGO_URL;
+const MORGAN_LEVEL = process.env.MORGAN_LEVEL || 'dev';
 const SESSION_SECRET = process.env.SESSION_SECRET || 'KaellyBot';
 const DISCORD_EXPIRATION_TOKEN_MS = 604800000;
 
@@ -27,6 +29,7 @@ APP.use(EXPRESS.static('views'));
 APP.set('view engine', 'ejs');
 APP.set('trust proxy', 1);
 APP.use(HELMET());
+APP.use(MORGAN(MORGAN_LEVEL));
 APP.use(SESSION({
 	secret: SESSION_SECRET,
 	resave: true,
