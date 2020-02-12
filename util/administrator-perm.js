@@ -1,0 +1,1 @@
+module.exports = guild => (guild.permissions & 0x08) === 0x08;
