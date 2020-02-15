@@ -1,0 +1,44 @@
+
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">
+        <img src="img/kaellyProfile.png" class="circle navbar-img" alt="">
+        KaellyBot</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        
+        <% if (locals.user){ %>
+            <li><a class="dropdown-trigger" href="#!" data-target="user">
+                <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" class="circle navbar-img" alt="">
+                Kaysoro<i class="material-icons right">arrow_drop_down</i>
+            </a></li>
+        <% } else { %>
+            <li><a href="/login">Login</a></li>
+        <% } %>
+        </ul>
+        <% if (locals.user){ %>
+            <ul id="user" class="dropdown-content">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        <% } %>
+    </div>
+    <ul class="sidenav" id="mobile-demo">
+        <% if (locals.user){ %>
+        <li>
+            <div class="user-view">
+                <div class="background red lighten-2">
+                </div>
+                <a href="#user">
+                    <img class="circle" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png">
+                </a>
+                <a href="#name"><span class="white-text name"><%= user.username %></span></a>
+            </div>
+        </li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/logout">Logout<i class="material-icons right">arrow_drop_down</i></a></li>
+        <% } else { %>
+            <li><a href="/login">Login</a></li>
+        <% } %>
+      </ul>
+  </nav>

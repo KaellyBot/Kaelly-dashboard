@@ -16,6 +16,7 @@ const OAUTH2_CLIENT_SECRET = process.env.OAUTH2_CLIENT_SECRET;
 const OAUTH2_REDIRECT_URI = process.env.OAUTH2_REDIRECT_URI || `http://localhost:${PORT}/api/discord`;
 const API_BASE_URL = 'https://discordapp.com/api';
 const AUTHORIZATION_BASE_URL = API_BASE_URL + '/oauth2/authorize';
+const USER_BASE_URL = API_BASE_URL + '/users/@me';
 const USER_GUILDS_BASE_URL = API_BASE_URL + '/users/@me/guilds';
 const TOKEN_URL = API_BASE_URL + '/oauth2/token'
 const KAELLYBOT_TOKEN = process.env.KAELLY_TOKEN;
@@ -42,15 +43,16 @@ APP.use(SESSION({
 	cookie: { secure: PRODUCTION_MODE, maxAge: DISCORD_EXPIRATION_TOKEN_MS}
 }));
 
-var login = function(req, res) {
+var dashboardRedirect = (req, res, next) => res.redirect('/dashboard');
+
+var login = (req, res, next) =>
 	res.redirect(`${AUTHORIZATION_BASE_URL}`
 				+ `?client_id=${OAUTH2_CLIENT_ID}`
 				+ `&redirect_uri=${OAUTH2_REDIRECT_URI}`
 				+ `&response_type=code`
-				+ `&scope=guilds`);
-}
+				+ `&scope=identify+guilds+email`);
 
-var grantDiscord = function(req, res) {
+var grantDiscord = (req, res, next) =>
 	AXIOS.post(`${TOKEN_URL}?grant_type=authorization_code`
 				+ `&code=${req.query.code}`
 				+ `&redirect_uri=${OAUTH2_REDIRECT_URI}`, {}, 
@@ -58,36 +60,36 @@ var grantDiscord = function(req, res) {
 		.then(response => {
 			req.session.loggedIn = true;
 			req.session.access_token = response.data.access_token;
-			res.redirect('/dashboard');
+			next();
 		})
 		.catch(error => res.json(error));
-}
 
-var getUserGuilds = function(req, res, next){
+var identifyUser = (req, res, next) =>
+	AXIOS.get(USER_BASE_URL, {headers: {'Authorization': `Bearer ${req.session.access_token}`}})
+        .then(response => {
+			req.session.user = response.data;
+			next();
+		})
+        .catch(error => res.json(error));
+
+var getUserGuilds = (req, res, next) =>
 	AXIOS.get(USER_GUILDS_BASE_URL, {headers: {'Authorization': `Bearer ${req.session.access_token}`}})
         .then(response => {
 			req.session.guilds = response.data.filter(HAS_USER_GET_ADMIN_PERMISSION);
 			next();
 		})
         .catch(error => res.json(error));
-}
 
-var checkLoggedIn = function(req, res, next) {
-	if (req.session.loggedIn)
-	  next();
-	else
-	  res.redirect("/login");
-  }
+var checkLoggedIn = (req, res, next) => req.session.loggedIn ? next() : res.redirect("/login");
 
-var logout = function (req, res) {
+var logout = (req, res, next) =>
 	req.session.destroy(function(err) {
 		if (err) console.log(err);
 		res.redirect('/');
 	  });
-}
 
 APP.use("/dashboard", checkLoggedIn, getUserGuilds, dashboardRouter);
-APP.use('/api/discord', grantDiscord);
+APP.use('/api/discord', grantDiscord, identifyUser, dashboardRedirect);
 APP.use("/login", login);
 APP.use("/logout", logout);
 APP.use("/", indexRouter);
