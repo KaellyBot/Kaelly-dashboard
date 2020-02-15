@@ -1,25 +1,27 @@
 
   <nav>
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">
-        <img src="img/kaellyProfile.png" class="circle navbar-img" alt="">
-        KaellyBot</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <a href="/" class="brand-logo">
+            <img src="img/kaellyProfile.png" class="circle navbar-img" alt="">
+            KaellyBot
+        </a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
         
-        <% if (locals.user){ %>
-            <li><a class="dropdown-trigger" href="#!" data-target="user">
-                <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" class="circle navbar-img" alt="">
-                Kaysoro<i class="material-icons right">arrow_drop_down</i>
-            </a></li>
-        <% } else { %>
-            <li><a href="/login">Login</a></li>
-        <% } %>
+            <% if (locals.user){ %>
+                <li><a class="dropdown-trigger" href="#!" data-target="user">
+                    <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png" class="circle navbar-img" alt="">
+                    <%= user.username %>
+                    <i class="material-icons right">arrow_drop_down</i>
+                </a></li>
+            <% } else { %>
+                <li><a href="/login">Login<i class="material-icons left">account_circle</i></a></li>
+            <% } %>
         </ul>
         <% if (locals.user){ %>
             <ul id="user" class="dropdown-content">
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/dashboard">Dashboard<i class="material-icons">dashboard</i></a></li>
+                <li><a href="/logout">Logout<i class="material-icons">exit_to_app</i></a></li>
             </ul>
         <% } %>
     </div>
@@ -35,10 +37,10 @@
                 <a href="#name"><span class="white-text name"><%= user.username %></span></a>
             </div>
         </li>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/logout">Logout<i class="material-icons right">arrow_drop_down</i></a></li>
+        <li><a href="/dashboard">Dashboard<i class="material-icons">dashboard</i></a></li>
+        <li><a href="/logout">Logout<i class="material-icons">exit_to_app</i></a></li>
         <% } else { %>
-            <li><a href="/login">Login</a></li>
+            <li><a href="/login">Login<i class="material-icons">account_circle</i></a></li>
         <% } %>
-      </ul>
+    </ul>
   </nav>
