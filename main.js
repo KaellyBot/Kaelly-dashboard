@@ -1,6 +1,7 @@
 // Libraries
 const HAS_USER_GET_ADMIN_PERMISSION = require('./util/administrator-perm');
 const EXPRESS = require('express');
+const PATH = require('path');
 const AXIOS = require('axios');
 const HELMET = require('helmet');
 const MORGAN = require('morgan');
@@ -32,7 +33,7 @@ var dashboardRouter = require('./routes/dashboard');
 var guildRouter = require('./routes/guild');
 
 // Server properties
-APP.use(EXPRESS.static('public'));
+APP.use(EXPRESS.static(PATH.join(__dirname, 'public')));
 APP.set('view engine', 'ejs');
 APP.set('trust proxy', 1);
 APP.use(HELMET());
