@@ -29,6 +29,7 @@ const DISCORD_EXPIRATION_TOKEN_MS = 604800000;
 // Load routes
 var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
+var guildRouter = require('./routes/guild');
 
 // Server properties
 APP.use(EXPRESS.static('public'));
@@ -82,6 +83,10 @@ var getUserGuilds = (req, res, next) =>
 
 var checkLoggedIn = (req, res, next) => req.session.loggedIn ? next() : res.redirect("/login");
 
+var checkIfUserHasGuild = (req, res, next) => req.session.guilds
+	.filter(guild => guild.id === req.params.guildId).length === 1 ? 
+	next() : res.redirect('/dashboard');
+
 var logout = (req, res, next) =>
 	req.session.destroy(function(err) {
 		if (err) console.log(err);
@@ -89,6 +94,7 @@ var logout = (req, res, next) =>
 	  });
 
 APP.use("/dashboard", checkLoggedIn, getUserGuilds, dashboardRouter);
+APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, guildRouter);
 APP.use(`${OAUTH2_REDIRECT_URI}`, grantDiscord, identifyUser, dashboardRedirect);
 APP.use("/login", login);
 APP.use("/logout", logout);

@@ -1,8 +1,10 @@
 .header {
     color: #EE6E73;
     font-weight: 300;
-    font-size: 2.92rem;
+    font-size: 2.5vw;
     line-height: 110%;
+    text-align : center;
+    text-transform: uppercase;
 }
 
 .navbar-img {
@@ -20,13 +22,47 @@ nav .brand-logo img {
     margin-bottom: 8px;
 }
 
-@media only screen and (max-width: 992px) {
-    nav .brand-logo img {
-        margin-left: 0px;
-    }
-}
-
 .sidenav .user-view .name {
     font-weight: 600 !important;
     padding-bottom: 16px;
+}
+
+.guildOverview {
+    text-align: center;
+}
+
+.guildName {
+    color: #EE6E73;
+    font-weight: 400;
+    font-size: 1.5vw;
+    line-height: 100%;
+}
+
+@media only screen and (max-width: 992px) {
+    .header {
+        font-size: 4vw;
+    }
+
+    nav .brand-logo img {
+        margin-left: 0px;
+    }
+
+    .guildOverview {
+        display: inline-block !important;
+    }
+
+    .guildName {
+        font-size: 2.5vw;
+        margin-bottom:5px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .header {
+        font-size: 7vw;
+    }
+
+    .guildName {
+        font-size: 5vw;
+    }
 }
