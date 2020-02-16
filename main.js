@@ -64,7 +64,10 @@ var grantDiscord = (req, res, next) =>
 			req.session.access_token = response.data.access_token;
 			next();
 		})
-		.catch(error => res.json(error));
+		.catch(error => {
+			// TODO manage error 'too many request'
+			console.error(error);
+		});
 
 var identifyUser = (req, res, next) =>
 	AXIOS.get(USER_BASE_URL, {headers: {'Authorization': `Bearer ${req.session.access_token}`}})
@@ -72,7 +75,10 @@ var identifyUser = (req, res, next) =>
 			req.session.user = response.data;
 			next();
 		})
-        .catch(error => res.json(error));
+        .catch(error => {
+			// TODO manage error 'too many request'
+			console.error(error);
+		});
 
 var getUserGuilds = (req, res, next) =>
 	AXIOS.get(USER_GUILDS_BASE_URL, {headers: {'Authorization': `Bearer ${req.session.access_token}`}})
@@ -80,7 +86,10 @@ var getUserGuilds = (req, res, next) =>
 			req.session.guilds = response.data.filter(HAS_USER_GET_ADMIN_PERMISSION);
 			next();
 		})
-        .catch(error => res.json(error));
+        .catch(error => {
+			// TODO manage error 'too many request'
+			console.error(error);
+		});
 
 var checkLoggedIn = (req, res, next) => req.session.loggedIn ? next() : res.redirect("/login");
 
@@ -90,7 +99,10 @@ var checkIfUserHasGuild = (req, res, next) => req.session.guilds
 
 var logout = (req, res, next) =>
 	req.session.destroy(function(err) {
-		if (err) console.log(err);
+		if (err) {
+			// TODO manage error (with sentry?)
+			console.error(err);
+		}
 		res.redirect('/');
 	  });
 
@@ -99,7 +111,20 @@ APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, guildRouter);
 APP.use(`${OAUTH2_REDIRECT_URI}`, grantDiscord, identifyUser, dashboardRedirect);
 APP.use("/login", login);
 APP.use("/logout", logout);
+APP.use('/testing', async (req, res, next) => next(new Error('Something broke! 😱')));
 APP.use("/", indexRouter);
+
+// 404
+APP.use((req, res, next) => {
+	res.status(404);
+    res.render('errors/404', { user : req.session.user });
+});
+
+// 500
+APP.use((err, req, res, next) => {
+	res.status(500);
+    res.render('errors/500', { user : req.session.user });
+});
 
 console.log(`Kaelly-dashboard is now listening ${PORT}`);
 APP.listen(PORT);

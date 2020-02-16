@@ -38,6 +38,12 @@ nav .brand-logo img {
     line-height: 100%;
 }
 
+.aura {
+    box-shadow: 0px 0px 40px 20px #0ff;
+    /* in order: x offset, y offset, blur size, spread size, color */
+    /* blur size and spread size are optional (they default to 0) */
+}
+
 @media only screen and (max-width: 992px) {
     .header {
         font-size: 4vw;
