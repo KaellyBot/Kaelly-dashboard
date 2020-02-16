@@ -1,5 +1,6 @@
 // Libraries
 const HAS_USER_GET_ADMIN_PERMISSION = require('./util/administrator-perm');
+const ERROR_HANDLER = require('./util/errorHandler');
 const EXPRESS = require('express');
 const PATH = require('path');
 const AXIOS = require('axios');
@@ -95,7 +96,7 @@ var checkLoggedIn = (req, res, next) => req.session.loggedIn ? next() : res.redi
 
 var checkIfUserHasGuild = (req, res, next) => req.session.guilds
 	.filter(guild => guild.id === req.params.guildId).length === 1 ? 
-	next() : res.redirect('/dashboard');
+	next() : ERROR_HANDLER.notFound(req, res, next);
 
 var logout = (req, res, next) =>
 	req.session.destroy(function(err) {
@@ -113,18 +114,8 @@ APP.use("/login", login);
 APP.use("/logout", logout);
 APP.use('/testing', async (req, res, next) => next(new Error('Something broke! 😱')));
 APP.use("/", indexRouter);
-
-// 404
-APP.use((req, res, next) => {
-	res.status(404);
-    res.render('errors/404', { user : req.session.user });
-});
-
-// 500
-APP.use((err, req, res, next) => {
-	res.status(500);
-    res.render('errors/500', { user : req.session.user });
-});
+APP.use(ERROR_HANDLER.notFound);
+APP.use(ERROR_HANDLER.internalError);
 
 console.log(`Kaelly-dashboard is now listening ${PORT}`);
 APP.listen(PORT);
