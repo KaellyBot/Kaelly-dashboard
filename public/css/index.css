@@ -38,6 +38,36 @@ nav .brand-logo img {
     line-height: 100%;
 }
 
+.page-footer .ad {
+    text-align: center;
+}
+
+.page-footer .btn-small {
+    background-color: #7289da;
+    margin-top: 10px;
+}
+
+.page-footer .btn-small:visited {
+    background-color: #7289da;
+}
+
+.page-footer .btn-small:hover {
+    background-color: #7289da;
+    filter: brightness(120%);
+}
+
+.page-footer .btn-small:active {
+    background-color: #7289da;
+}
+
+.page-footer .btn-small:focus {
+    background-color: #7289da;
+}
+
+.discord-footer {
+    background-color: #26262b !important;
+}
+
 .aura {
     box-shadow: 0px 0px 40px 20px #0ff;
     /* in order: x offset, y offset, blur size, spread size, color */
@@ -60,6 +90,10 @@ nav .brand-logo img {
     .guildName {
         font-size: 2.5vw;
         margin-bottom:5px;
+    }
+
+    .page-footer {
+        text-align: center;
     }
 }
 
