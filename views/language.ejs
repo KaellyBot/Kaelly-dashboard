@@ -1,0 +1,49 @@
+<html>
+    <%- include('partials/head') %>
+    <body>
+        <%- include('partials/nav', {user: locals.user ? user : null }) %>
+        <div class="container">
+            <div class="row">
+                <h1 class="header"><%= guild.name %></h1>
+                <div id="language" class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <h2 class="header">Default Language</h2>
+                            <select id="defaultLanguage" class="icons">
+                                <option value="FR" selected data-icon="/img/FR.png">Français</option>
+                                <option value="EN" data-icon="/img/EN.png">English</option>
+                                <option value="ES" data-icon="/img/ES.png">Español</option>
+                            </select>
+                            <label>Default Language</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h2 class="header">Specific Language for Channel</h2>
+                        <div class="col s12 m4">
+                            <select id="channelId">
+                                <option value="1" selected>Channel 1</option>
+                                <option value="2">Channel 2</option>
+                                <option value="3">Channel 3</option>
+                            </select>
+                            <label>Channel</label>
+                        </div>
+                        <div class="col s12 m4">
+                            <select id="channelLanguage" class="icons">
+                                <option value="FR" selected data-icon="/img/FR.png">Français</option>
+                                <option value="EN" data-icon="/img/EN.png">English</option>
+                                <option value="ES" data-icon="/img/ES.png">Español</option>
+                            </select>
+                            <label>Specific Language</label>
+                        </div>
+                        <div class="col s12 m4">
+                            <a href="#" class="waves-effect waves-light btn-small">
+                                Add
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <%- include('partials/scripts') %>
+</html>

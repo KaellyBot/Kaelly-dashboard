@@ -32,6 +32,11 @@ const DISCORD_EXPIRATION_TOKEN_MS = 604800000;
 var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
 var guildRouter = require('./routes/guild');
+var almanaxRouter = require('./routes/guild/almanax');
+var languageRouter = require('./routes/guild/language');
+var rssRouter = require('./routes/guild/rss');
+var serverRouter = require('./routes/guild/server');
+var twitterRouter = require('./routes/guild/twitter');
 
 // Server properties
 APP.use(EXPRESS.static(PATH.join(__dirname, 'public')));
@@ -109,6 +114,11 @@ var logout = (req, res, next) =>
 
 APP.use("/dashboard", checkLoggedIn, getUserGuilds, dashboardRouter);
 APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, guildRouter);
+APP.use("/guild/:guildId/almanax", checkLoggedIn, checkIfUserHasGuild, almanaxRouter);
+APP.use("/guild/:guildId/language", checkLoggedIn, checkIfUserHasGuild, languageRouter);
+APP.use("/guild/:guildId/rss", checkLoggedIn, checkIfUserHasGuild, rssRouter);
+APP.use("/guild/:guildId/server", checkLoggedIn, checkIfUserHasGuild, serverRouter);
+APP.use("/guild/:guildId/twitter", checkLoggedIn, checkIfUserHasGuild, twitterRouter);
 APP.use(`${OAUTH2_REDIRECT_URI}`, grantDiscord, identifyUser, dashboardRedirect);
 APP.use("/login", login);
 APP.use("/logout", logout);

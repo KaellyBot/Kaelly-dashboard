@@ -5,77 +5,108 @@
         <div class="container">
             <div class="row">
                 <h1 class="header"><%= guild.name %></h1>
-                <div class="col s12">
-                    <ul class="tabs">
-                        <li class="tab col s6"><a class="active" href="#guild">General Settings</a></li>
-                        <li class="tab col s6"><a href="#notifs">Notifications</a></li>
-                    </ul>
-                </div>
-                <div id="guild" class="col s12">
-                    <ul class="tabs nested">
-                        <li class="tab col s6"><a class="active" href="#language">Language</a></li>
-                        <li class="tab col s6"><a href="#dofusServer">Dofus Server</a></li>
-                    </ul>
 
-                    <div id="language" class="col s12">
-                        <div class="row">
-                            <div class="col s12">
-                                <h2 class="header">Default Language</h2>
-                                <select id="defaultLanguage" class="icons">
-                                    <option value="FR" selected data-icon="/img/FR.png">Français</option>
-                                    <option value="EN" data-icon="/img/EN.png">English</option>
-                                    <option value="ES" data-icon="/img/ES.png">Español</option>
-                                </select>
-                                <label>Default Language</label>
+                <!-- Almanax -->
+                <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/almanax.png" class="circle responsive-img">
                             </div>
-                        </div>
-                        <div class="row">
-                            <h2 class="header">Specific Language for Channel</h2>
-                            <div class="col s12 m4">
-                                <select id="channelId">
-                                    <option value="1" selected>Channel 1</option>
-                                    <option value="2">Channel 2</option>
-                                    <option value="3">Channel 3</option>
-                                </select>
-                                <label>Channel</label>
-                            </div>
-                            <div class="col s12 m4">
-                                <select id="channelLanguage" class="icons">
-                                    <option value="FR" selected data-icon="/img/FR.png">Français</option>
-                                    <option value="EN" data-icon="/img/EN.png">English</option>
-                                    <option value="ES" data-icon="/img/ES.png">Español</option>
-                                </select>
-                                <label>Specific Language</label>
-                            </div>
-                            <div class="col s12 m4">
-                                <a href="#" class="waves-effect waves-light btn-small">
-                                    Add
-                                </a>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        Almanax
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/almanax" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div id="dofusServer" class="col s12">
-                        <p class="flow-text">Dofus Server</p>
+                <!-- Dofus Server -->
+                <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/server.png" class="circle responsive-img">
+                            </div>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        Dofus Server
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/server" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id="notifs" class="col s12">
-                    <ul class="tabs nested">
-                        <li class="tab col s4"><a class="active" href="#almanax">Almanax</a></li>
-                        <li class="tab col s4"><a href="#twitter">Twitter</a></li>
-                        <li class="tab col s4"><a href="#rss">RSS</a></li>
-                    </ul>
 
-                    <div id="almanax" class="col s12">
-                        <p class="flow-text">Almanax</p>
+                 <!-- Language -->
+                 <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/language.png" class="circle responsive-img">
+                            </div>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        Language
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/language" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <div id="twitter" class="col s12">
-                        <p class="flow-text">Twitter</p>
+                <!-- Twitter -->
+                <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/twitter.png" class="circle responsive-img">
+                            </div>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        Twitter
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/twitter" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div id="rss" class="col s12">
-                        <p class="flow-text">RSS</p>
+                </div>
+                <!-- RSS -->
+                <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/rss.png" class="circle responsive-img">
+                            </div>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        RSS
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/rss" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
