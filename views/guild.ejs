@@ -6,6 +6,48 @@
             <div class="row">
                 <h1 class="header"><%= guild.name %></h1>
 
+                <!-- Commands -->
+                <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/commands.png" class="circle responsive-img">
+                            </div>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        Commands
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/commands" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Language -->
+                <div class="col s12 l6">
+                    <div class="card-panel grey lighten-5 z-depth-1">
+                        <div class="valign-wrapper">
+                            <div class="col s3 m2">
+                                <img src="/img/language.png" class="circle responsive-img">
+                            </div>
+                            <div class="col s9 m10 guildOverview valign-wrapper">
+                                    <div class="col s12 l6 guildName">
+                                        Language
+                                    </div>
+                                    <div class="col s12 l6">
+                                        <a href="/guild/<%= guild.id %>/language" class="waves-effect waves-light btn-small">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </a>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Almanax -->
                 <div class="col s12 l6">
                     <div class="card-panel grey lighten-5 z-depth-1">
@@ -40,27 +82,6 @@
                                     </div>
                                     <div class="col s12 l6">
                                         <a href="/guild/<%= guild.id %>/server" class="waves-effect waves-light btn-small">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                 <!-- Language -->
-                 <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/language.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 guildOverview valign-wrapper">
-                                    <div class="col s12 l6 guildName">
-                                        Language
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/language" class="waves-effect waves-light btn-small">
                                             <i class="material-icons">keyboard_arrow_right</i>
                                         </a>
                                     </div>

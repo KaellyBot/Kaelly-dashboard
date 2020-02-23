@@ -33,6 +33,7 @@ var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
 var guildRouter = require('./routes/guild');
 var almanaxRouter = require('./routes/guild/almanax');
+var commandsRouter = require('./routes/guild/commands');
 var languageRouter = require('./routes/guild/language');
 var rssRouter = require('./routes/guild/rss');
 var serverRouter = require('./routes/guild/server');
@@ -115,6 +116,7 @@ var logout = (req, res, next) =>
 APP.use("/dashboard", checkLoggedIn, getUserGuilds, dashboardRouter);
 APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, guildRouter);
 APP.use("/guild/:guildId/almanax", checkLoggedIn, checkIfUserHasGuild, almanaxRouter);
+APP.use("/guild/:guildId/commands", checkLoggedIn, checkIfUserHasGuild, commandsRouter);
 APP.use("/guild/:guildId/language", checkLoggedIn, checkIfUserHasGuild, languageRouter);
 APP.use("/guild/:guildId/rss", checkLoggedIn, checkIfUserHasGuild, rssRouter);
 APP.use("/guild/:guildId/server", checkLoggedIn, checkIfUserHasGuild, serverRouter);
