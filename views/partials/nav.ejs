@@ -15,13 +15,13 @@
                     <i class="material-icons right">arrow_drop_down</i>
                 </a></li>
             <% } else { %>
-                <li><a href="/login">Login<i class="material-icons left">account_circle</i></a></li>
+                <li><a href="/login">Login<i class="material-icons left brown-text text-lighten-1">account_circle</i></a></li>
             <% } %>
         </ul>
         <% if (locals.user){ %>
             <ul id="user" class="dropdown-content">
-                <li><a href="/dashboard">Dashboard<i class="material-icons">dashboard</i></a></li>
-                <li><a href="/logout">Logout<i class="material-icons">exit_to_app</i></a></li>
+                <li><a href="/dashboard">Dashboard<i class="material-icons brown-text text-lighten-1">dashboard</i></a></li>
+                <li><a href="/logout">Logout<i class="material-icons brown-text text-lighten-1">exit_to_app</i></a></li>
             </ul>
         <% } %>
     </div>
@@ -29,7 +29,7 @@
         <% if (locals.user){ %>
         <li>
             <div class="user-view">
-                <div class="background red lighten-2">
+                <div class="background brown lighten-2">
                 </div>
                 <a href="#user">
                     <img class="circle" src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.png">
@@ -37,10 +37,10 @@
                 <a href="#name"><span class="white-text name"><%= user.username %></span></a>
             </div>
         </li>
-        <li><a href="/dashboard">Dashboard<i class="material-icons">dashboard</i></a></li>
-        <li><a href="/logout">Logout<i class="material-icons">exit_to_app</i></a></li>
+        <li><a href="/dashboard">Dashboard<i class="material-icons brown-text text-lighten-1">dashboard</i></a></li>
+        <li><a href="/logout">Logout<i class="material-icons brown-text text-lighten-1">exit_to_app</i></a></li>
         <% } else { %>
-            <li><a href="/login">Login<i class="material-icons">account_circle</i></a></li>
+            <li><a href="/login">Login<i class="material-icons brown-text text-lighten-1">account_circle</i></a></li>
         <% } %>
     </ul>
   </nav>

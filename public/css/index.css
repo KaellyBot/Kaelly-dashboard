@@ -22,17 +22,24 @@ nav .brand-logo img {
     margin-bottom: 8px;
 }
 
+.dropdown-content li > a, .sidenav li > a {
+    color: #424242 !important;
+}
+
+.dropdown-content li > a > i {
+    color: rgba(0,0,0,0.54);
+}
+
 .sidenav .user-view .name {
     font-weight: 600 !important;
     padding-bottom: 16px;
 }
 
-.guildOverview {
+.panelOverview {
     text-align: center;
 }
 
-.guildName {
-    color: #EE6E73;
+.panelName {
     font-weight: 400;
     font-size: 1.5vw;
     line-height: 100%;
@@ -83,11 +90,11 @@ nav .brand-logo img {
         margin-left: 0px;
     }
 
-    .guildOverview {
+    .panelOverview {
         display: inline-block !important;
     }
 
-    .guildName {
+    .panelName {
         font-size: 2.5vw;
         margin-bottom:5px;
     }
@@ -102,7 +109,7 @@ nav .brand-logo img {
         font-size: 7vw;
     }
 
-    .guildName {
+    .panelName {
         font-size: 5vw;
     }
 }
