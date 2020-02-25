@@ -42,6 +42,10 @@ nav .brand-logo img {
     line-height: 100%;
 }
 
+.hoverable {
+    cursor: pointer;
+}
+
 .page-footer .ad {
     text-align: center;
 }

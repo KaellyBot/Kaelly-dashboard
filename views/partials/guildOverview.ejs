@@ -1,5 +1,5 @@
 <div class="col s12 l6">
-    <div class="card-panel grey lighten-5 z-depth-1">
+    <div class="card-panel hoverable grey lighten-5 z-depth-1" onclick="document.querySelector('#guild<%= guild.id %>').click();">
         <div class="valign-wrapper">
             <div class="col s3 m2">
                 <img src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : '/img/discord.png' %>" class="circle responsive-img">
@@ -9,7 +9,7 @@
                         <%= guild.name %>
                     </div>
                     <div class="col s12 l6">
-                        <a href="<%= `/guild/${guild.id}` %>" class="waves-effect waves-light btn-small grey darken-2">
+                        <a id="guild<%= guild.id %>" href="<%= `/guild/${guild.id}` %>" class="waves-effect waves-light btn-small grey darken-2">
                             <i class="material-icons right">keyboard_arrow_right</i>
                             Dashboard
                         </a>
