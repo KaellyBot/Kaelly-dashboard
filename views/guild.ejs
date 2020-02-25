@@ -3,139 +3,14 @@
     <body>
         <%- include('partials/nav', {user: locals.user ? user : null }) %>
         <div class="container">
+            <%- include('partials/settingTitle', {guild: guild, setting : { backUrl:'/dashboard'} }) %>
             <div class="row">
-                <h1 class="header"><%= guild.name %></h1>
-
-                <!-- Commands -->
-                <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/commands.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 panelOverview valign-wrapper grey-text text-darken-3">
-                                    <div class="col s12 l6 panelName">
-                                        Commands
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/commands" class="waves-effect waves-light btn-small brown lighten-1">
-                                            Manage
-                                            <i class="material-icons right">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Language -->
-                <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/language.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 panelOverview valign-wrapper grey-text text-darken-3">
-                                    <div class="col s12 l6 panelName">
-                                        Language
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/language" class="waves-effect waves-light btn-small brown lighten-1">
-                                            Manage
-                                            <i class="material-icons right">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Almanax -->
-                <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/almanax.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 panelOverview valign-wrapper grey-text text-darken-3">
-                                    <div class="col s12 l6 panelName">
-                                        Almanax
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/almanax" class="waves-effect waves-light btn-small brown lighten-1">
-                                            Manage
-                                            <i class="material-icons right">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Dofus Server -->
-                <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/server.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 panelOverview valign-wrapper grey-text text-darken-3">
-                                    <div class="col s12 l6 panelName">
-                                        Dofus Server
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/server" class="waves-effect waves-light btn-small brown lighten-1">
-                                            Manage
-                                            <i class="material-icons right">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Twitter -->
-                <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/twitter.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 panelOverview valign-wrapper grey-text text-darken-3">
-                                    <div class="col s12 l6 panelName">
-                                        Twitter
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/twitter" class="waves-effect waves-light btn-small brown lighten-1">
-                                            Manage
-                                            <i class="material-icons right">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- RSS -->
-                <div class="col s12 l6">
-                    <div class="card-panel grey lighten-5 z-depth-1">
-                        <div class="valign-wrapper">
-                            <div class="col s3 m2">
-                                <img src="/img/rss.png" class="circle responsive-img">
-                            </div>
-                            <div class="col s9 m10 panelOverview valign-wrapper grey-text text-darken-3">
-                                    <div class="col s12 l6 panelName">
-                                        RSS
-                                    </div>
-                                    <div class="col s12 l6">
-                                        <a href="/guild/<%= guild.id %>/rss" class="waves-effect waves-light btn-small brown lighten-1">
-                                            Manage
-                                            <i class="material-icons right">keyboard_arrow_right</i>
-                                        </a>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <%- include('partials/settingOverview', {setting: { name: 'Commands', icon: '/img/commands.png', url: `/guild/${guild.id}/commands`}}) %>
+                <%- include('partials/settingOverview', {setting: { name: 'Language', icon: '/img/language.png', url: `/guild/${guild.id}/language`}}) %>
+                <%- include('partials/settingOverview', {setting: { name: 'Almanax', icon: '/img/almanax.png', url: `/guild/${guild.id}/almanax`}}) %>
+                <%- include('partials/settingOverview', {setting: { name: 'Dofus Server', icon: '/img/server.png', url: `/guild/${guild.id}/server`}}) %>
+                <%- include('partials/settingOverview', {setting: { name: 'Twitter', icon: '/img/twitter.png', url: `/guild/${guild.id}/twitter`}}) %>
+                <%- include('partials/settingOverview', {setting: { name: 'RSS Feeds', icon: '/img/rss.png', url: `/guild/${guild.id}/rss`}}) %>
             </div>
         </div>
     </body>
