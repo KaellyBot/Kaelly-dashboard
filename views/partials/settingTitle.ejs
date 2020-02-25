@@ -1,12 +1,15 @@
 <div class="row ">
-    <div class="valign-wrapper">
-        <div class="col s3 m2 l1">
-            <img src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : '/img/discord.png' %>" class="circle responsive-img header-img">
+    <div class="valign-wrapper setting-title">
+        <div class="col s12 m9 l10 valign-wrapper">
+            <div class="col s3 m2 l1 valign-wrapper">
+                <img src="<%= guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png` : '/img/discord.png' %>" class="circle responsive-img">
+            </div>
+            <div class="col s9 m10 l11">
+                <h1 class="header grey-text text-darken-3"><%= guild.name %></h1>
+            </div>
         </div>
-        <div class="col s9 m10 l9">
-            <h1 class="header grey-text text-darken-3"><%= guild.name %></h1>
-        </div>
-        <div class="col m12 l2">
+        
+        <div class="col s12 m3 l2 col-back">
             <a href="<%= setting.backUrl %>" class="waves-effect waves-light btn-small red lighten-2 back">
                 Back
                 <i class="material-icons left">keyboard_arrow_left</i>

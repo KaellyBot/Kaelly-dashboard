@@ -1,14 +1,15 @@
 .header {
     font-size: 2.5vw;
     text-align : center;
-}
-
-.header-img {
-    margin-top: 1.68rem;
+    margin:20px 0px 20px 0px;
 }
 
 .back {
-    width:100%
+    width:100%;
+}
+
+.col-back {
+    text-align: right !important;
 }
 
 .navbar-img {
@@ -82,10 +83,6 @@ nav .brand-logo img {
         font-size: 4vw;
     }
 
-    .back {
-        width:80%
-    }
-
     nav .brand-logo img {
         margin-left: 0px;
     }
@@ -97,6 +94,10 @@ nav .brand-logo img {
     .panelName {
         font-size: 2.5vw;
         margin-bottom:5px;
+    }
+
+    .setting-title {
+        margin-top: 20px;
     }
 
     .page-footer {
@@ -111,5 +112,18 @@ nav .brand-logo img {
 
     .panelName {
         font-size: 5vw;
+    }
+
+    .back {
+        width: 60%;
+        margin-top: 20px;
+    }
+
+    .col-back {
+        text-align: center !important;
+    }
+
+    .row .setting-title { 
+        display: inherit !important; 
     }
 }
