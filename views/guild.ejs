@@ -3,7 +3,7 @@
     <body>
         <%- include('partials/nav', {user: locals.user ? user : null }) %>
         <div class="container">
-            <%- include('partials/settingTitle', {guild: guild, setting : { backUrl:'/dashboard'} }) %>
+            <%- include('partials/settingTitle', {guild: guild, setting : { title: guild.name, backUrl:'/dashboard'} }) %>
             <div class="row">
                 <%- include('partials/settingOverview', {setting: { id: 'commands', name: 'Commands',     icon: '/img/commands.png', url: `/guild/${guild.id}/commands`}}) %>
                 <%- include('partials/settingOverview', {setting: { id: 'language', name: 'Language',     icon: '/img/language.png', url: `/guild/${guild.id}/language`}}) %>

@@ -3,45 +3,87 @@
     <body>
         <%- include('partials/nav', {user: locals.user ? user : null }) %>
         <div class="container">
+            <%- include('partials/settingTitle', {guild: guild, setting : { title: 'Language Settings', backUrl:`/guild/${guild.id}`} }) %>
+            
             <div class="row">
-                <h1 class="header"><%= guild.name %></h1>
-                <div id="language" class="col s12">
-                    <div class="row">
-                        <div class="col s12">
-                            <h2 class="header">Default Language</h2>
-                            <select id="defaultLanguage" class="icons">
-                                <option value="FR" selected data-icon="/img/FR.png">Français</option>
-                                <option value="EN" data-icon="/img/EN.png">English</option>
-                                <option value="ES" data-icon="/img/ES.png">Español</option>
-                            </select>
-                            <label>Default Language</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <h2 class="header">Specific Language for Channel</h2>
-                        <div class="col s12 m4">
-                            <select id="channelId">
-                                <option value="1" selected>Channel 1</option>
-                                <option value="2">Channel 2</option>
-                                <option value="3">Channel 3</option>
-                            </select>
-                            <label>Channel</label>
-                        </div>
-                        <div class="col s12 m4">
-                            <select id="channelLanguage" class="icons">
-                                <option value="FR" selected data-icon="/img/FR.png">Français</option>
-                                <option value="EN" data-icon="/img/EN.png">English</option>
-                                <option value="ES" data-icon="/img/ES.png">Español</option>
-                            </select>
-                            <label>Specific Language</label>
-                        </div>
-                        <div class="col s12 m4">
-                            <a href="#" class="waves-effect waves-light btn-small">
-                                Add
-                            </a>
-                        </div>
-                    </div>
+                <div class="col s12">
+                    <h2 class="header2 grey-text text-darken-3">Select the language used by default</h2>
                 </div>
+                <form action="<%=`/guild/${guild.id}/defaultLanguage/update` %>" method="POST">
+                    <div class="input-field col s12 l10">
+                        <select id="defaultLanguage" name="defaultLanguage" class="icons">
+                            <option value="FR" data-icon="/img/FR.png">Français</option>
+                            <option value="EN" data-icon="/img/EN.png">English</option>
+                            <option value="ES" data-icon="/img/ES.png">Español</option>
+                        </select>
+                        <label>Default Language</label>
+                    </div>
+                    <div class="input-field right-align col s12 l2">
+                        <button class="waves-effect waves-light btn-small grey darken-2 setting-action" type="submit" name="action">
+                            <i class="material-icons left">update</i>Update
+                        </button>
+                    </div>
+                </form>
+
+                
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <h2 class="header2 grey-text text-darken-3">Language specified per channel</h2>
+                </div>
+                <div class="col s12">
+                    <table class="highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Channel Name</th>
+                                <th>Language</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Channel 1</td>
+                                <td>Français</td>
+                                <td class="right-align">
+                                    <a href="<%=`/guild/${guild.id}/languageChannel/delete` %>" class="waves-effect waves-light btn-small grey darken-2">
+                                        Delete
+                                        <i class="material-icons left">clear</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <h2 class="header2 grey-text text-darken-3">Specify a language for a channel</h2>
+                </div>
+                <form action="<%=`/guild/${guild.id}/languageChannel/add` %>" method="POST">
+                    <div class="input-field col s12 l5">
+                        <select id="channelId" name="channelId" class="validate" required>
+                            <option value="" disabled selected>Choose a channel</option>
+                            <option value="1">Channel 1</option>
+                            <option value="2">Channel 2</option>
+                            <option value="3">Channel 3</option>
+                        </select>
+                        <label>Specific Channel</label>
+                    </div>
+                    <div class="input-field col s12 l5">
+                        <select id="languageId" name="languageId" class="validate icons" required>
+                            <option value="" disabled selected>Choose a language</option>
+                            <option value="FR" data-icon="/img/FR.png">Français</option>
+                            <option value="EN" data-icon="/img/EN.png">English</option>
+                            <option value="ES" data-icon="/img/ES.png">Español</option>
+                        </select>
+                        <label>Specific Language</label>
+                    </div>
+                    <div class="input-field col s12 l2 right-align">
+                        <button class="waves-effect waves-light btn-small setting-action grey darken-2" type="submit" name="action">
+                            <i class="material-icons left">add_box</i>Add
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
