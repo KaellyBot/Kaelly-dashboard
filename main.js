@@ -1,5 +1,8 @@
 // Libraries
-const HAS_USER_GET_ADMIN_PERMISSION = require('./util/administrator-perm');
+require('dotenv').config();
+const DISCORD = require('discord.js');
+const DISCORD_CLIENT = new DISCORD.Client();
+const DISCORD_UTILITY = require('./util/discordUtility');
 const ERROR_HANDLER = require('./util/errorHandler');
 const EXPRESS = require('express');
 const PATH = require('path');
@@ -8,7 +11,6 @@ const HELMET = require('helmet');
 const MORGAN = require('morgan');
 const SESSION = require('express-session');
 const APP = EXPRESS();
-require('dotenv').config();
 
 // Environment variables
 const PRODUCTION_MODE = process.env.PRODUCTION_MODE || false;
@@ -87,10 +89,16 @@ var identifyUser = (req, res, next) =>
 			console.error(error);
 		});
 
-var getUserGuilds = (req, res, next) =>
+var loadDiscordData = (req, res, next) =>
 	AXIOS.get(USER_GUILDS_BASE_URL, {headers: {'Authorization': `Bearer ${req.session.access_token}`}})
         .then(response => {
-			req.session.guilds = response.data.filter(HAS_USER_GET_ADMIN_PERMISSION);
+			req.session.guilds = response.data.filter(DISCORD_UTILITY.HAS_USER_GET_ADMIN_PERMISSION);
+			req.session.guilds.forEach(guild => {
+				let guildDataFromBot = DISCORD_CLIENT.guilds.get(guild.id);
+				guild.connected = guildDataFromBot ? true : false;
+				guild.channels = guild.connected ? Array.from(guildDataFromBot.channels.values())
+															.filter(DISCORD_UTILITY.IS_GUILD_TEXT) : [];				
+			});
 			next();
 		})
         .catch(error => {
@@ -113,7 +121,7 @@ var logout = (req, res, next) =>
 		res.redirect('/');
 	  });
 
-APP.use("/dashboard", checkLoggedIn, getUserGuilds, dashboardRouter);
+APP.use("/dashboard", checkLoggedIn, loadDiscordData, dashboardRouter);
 APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, guildRouter);
 APP.use("/guild/:guildId/almanax", checkLoggedIn, checkIfUserHasGuild, almanaxRouter);
 APP.use("/guild/:guildId/commands", checkLoggedIn, checkIfUserHasGuild, commandsRouter);
@@ -129,5 +137,10 @@ APP.use("/", indexRouter);
 APP.use(ERROR_HANDLER.notFound);
 APP.use(ERROR_HANDLER.internalError);
 
-console.log(`Kaelly-dashboard is now listening ${PORT}`);
-APP.listen(PORT);
+DISCORD_CLIENT.on('ready', () => {
+	console.log(`Kaelly-dashboard is logged in as ${DISCORD_CLIENT.user.tag}!`);
+	console.log(`Kaelly-dashboard is now listening ${PORT}`);
+	APP.listen(PORT);
+  });
+
+DISCORD_CLIENT.login(KAELLY_BOT_TOKEN);

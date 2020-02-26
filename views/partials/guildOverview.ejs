@@ -8,11 +8,18 @@
                     <div class="col s12 l6 panelName">
                         <%= guild.name %>
                     </div>
-                    <div class="col s12 l6">
-                        <a id="guild<%= guild.id %>" href="<%= `/guild/${guild.id}` %>" class="waves-effect waves-light btn-small grey darken-2">
-                            <i class="material-icons right">keyboard_arrow_right</i>
-                            Dashboard
-                        </a>
+                    <div class="col s12 l6 btn-guild">
+                        <% if (guild.connected){ %>
+                            <a id="guild<%= guild.id %>" href="<%= `/guild/${guild.id}` %>" class="waves-effect waves-light btn-small grey darken-2">
+                                <i class="material-icons right">keyboard_arrow_right</i>
+                                Dashboard
+                            </a>
+                        <% } else { %>
+                            <a id="guild<%= guild.id %>" href="#" class="waves-effect waves-light btn-small grey darken-2">
+                                <i class="material-icons right">insert_link</i>
+                                Invite
+                            </a>
+                        <% } %>
                     </div>
             </div>
         </div>

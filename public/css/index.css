@@ -9,6 +9,10 @@
     margin:20px 0px 20px 0px;
 }
 
+.btn-guild {
+    text-align: right;
+}
+
 .setting-action {
     margin-right: 5px;
 }
@@ -129,6 +133,14 @@ nav .brand-logo img {
 
     .header2 {
         font-size: 5vw;
+    }
+
+    .btn-guild {
+        text-align: center;
+    }
+
+    .btn-guild a {
+        width: 100%;
     }
 
     .panelName {

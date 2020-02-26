@@ -63,9 +63,9 @@
                     <div class="input-field col s12 l5">
                         <select id="channelId" name="channelId" class="validate" required>
                             <option value="" disabled selected>Choose a channel</option>
-                            <option value="1">Channel 1</option>
-                            <option value="2">Channel 2</option>
-                            <option value="3">Channel 3</option>
+                            <% guild.channels.forEach(function(channel) { %>
+                                <option value="<%= channel.id %>"><%= channel.name %></option>
+                            <% }); %>
                         </select>
                         <label>Specific Channel</label>
                     </div>

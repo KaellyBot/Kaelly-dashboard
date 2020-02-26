@@ -4,6 +4,7 @@ module.exports = {
         res.render('errors/404', { user : req.session.user });
         },
     internalError: (err, req, res, next) => {
+        console.log(err);
         res.status(500);
         res.render('errors/500', { user : req.session.user })
     }
