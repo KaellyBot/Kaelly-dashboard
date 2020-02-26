@@ -112,6 +112,10 @@ var checkIfUserHasGuild = (req, res, next) => req.session.guilds
 	.filter(guild => guild.id === req.params.guildId).length === 1 ? 
 	next() : ERROR_HANDLER.notFound(req, res, next);
 
+var checkIfGuildIsConnected = (req, res, next) => req.session.guilds
+	.filter(guild => guild.id === req.params.guildId)[0].connected ? 
+	next() : ERROR_HANDLER.notFound(req, res, next);
+
 var logout = (req, res, next) =>
 	req.session.destroy(function(err) {
 		if (err) {
@@ -122,13 +126,13 @@ var logout = (req, res, next) =>
 	  });
 
 APP.use("/dashboard", checkLoggedIn, loadDiscordData, dashboardRouter);
-APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, guildRouter);
-APP.use("/guild/:guildId/almanax", checkLoggedIn, checkIfUserHasGuild, almanaxRouter);
-APP.use("/guild/:guildId/commands", checkLoggedIn, checkIfUserHasGuild, commandsRouter);
-APP.use("/guild/:guildId/language", checkLoggedIn, checkIfUserHasGuild, languageRouter);
-APP.use("/guild/:guildId/rss", checkLoggedIn, checkIfUserHasGuild, rssRouter);
-APP.use("/guild/:guildId/server", checkLoggedIn, checkIfUserHasGuild, serverRouter);
-APP.use("/guild/:guildId/twitter", checkLoggedIn, checkIfUserHasGuild, twitterRouter);
+APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, guildRouter);
+APP.use("/guild/:guildId/almanax", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, almanaxRouter);
+APP.use("/guild/:guildId/commands", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, commandsRouter);
+APP.use("/guild/:guildId/language", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, languageRouter);
+APP.use("/guild/:guildId/rss", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, rssRouter);
+APP.use("/guild/:guildId/server", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, serverRouter);
+APP.use("/guild/:guildId/twitter", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, twitterRouter);
 APP.use(`${OAUTH2_REDIRECT_URI}`, grantDiscord, identifyUser, dashboardRedirect);
 APP.use("/login", login);
 APP.use("/logout", logout);
