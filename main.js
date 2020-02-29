@@ -131,12 +131,29 @@ var checkIfGuildIsConnected = (req, res, next) => req.session.guilds
 	.filter(guild => guild.id === req.params.guildId)[0].connected ? 
 	next() : ERROR_HANDLER.notFound(req, res, next);
 
-// TODO
-var checkIfDefaultLanguageExists = (req, res, next) => next();
+// TODO mongoose?
+var checkIfLanguageExists = (req, res, next) => next();
 
-// TODO
+var checkIfChannelExists = (req, res, next) => req.session.guilds
+	.filter(guild => guild.id === req.params.guildId)[0].channels
+	.filter(channel => channel.id === req.body.channelId).length === 1 ? 
+	next(): ERROR_HANDLER.notFound(req, res, next);
+
+// TODO mongoose
 var saveDefaultLanguage = (req, res, next) => {
 	req.session.success = `The default Language is now ${req.body.defaultLanguage}.`
+	res.redirect(`/guild/${req.params.guildId}/language`);
+};
+
+// TODO mongoose
+var saveChannelLanguage = (req, res, next) => {
+	req.session.success = `The channel ${req.body.channelId} now uses the ${req.body.languageId} language.`
+	res.redirect(`/guild/${req.params.guildId}/language`);
+};
+
+// TODO mongoose
+var deleteChannelLanguage = (req, res, next) => {
+	req.session.success = `The channel ${req.body.channelId} now uses the default language.`
 	res.redirect(`/guild/${req.params.guildId}/language`);
 };
 
@@ -149,20 +166,22 @@ var logout = (req, res, next) =>
 		res.redirect('/');
 	  });
 
-APP.use("/dashboard", cleanVariableSession, checkLoggedIn, loadDiscordData, dashboardRouter);
-APP.use("/guild/:guildId", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, guildRouter);
-APP.use("/guild/:guildId/almanax", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, almanaxRouter);
-APP.use("/guild/:guildId/commands", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, commandsRouter);
-APP.use("/guild/:guildId/language", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, languageRouter);
-APP.use("/guild/:guildId/defaultLanguage/save", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, checkIfDefaultLanguageExists, saveDefaultLanguage);
-APP.use("/guild/:guildId/rss", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, rssRouter);
-APP.use("/guild/:guildId/server", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, serverRouter);
-APP.use("/guild/:guildId/twitter", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, twitterRouter);
-APP.use(`${OAUTH2_REDIRECT_URI}`, cleanVariableSession, grantDiscord, identifyUser, dashboardRedirect);
-APP.use("/login", cleanVariableSession, login);
-APP.use("/logout", cleanVariableSession, logout);
-APP.use('/testing', async (req, res, next) => next(new Error('Something broke! 😱')));
-APP.use("/", cleanVariableSession, indexRouter);
+APP.use("/dashboard",                             cleanVariableSession, checkLoggedIn, loadDiscordData,     dashboardRouter);
+APP.use("/guild/:guildId",                        cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, guildRouter);
+APP.use("/guild/:guildId/almanax",                cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, almanaxRouter);
+APP.use("/guild/:guildId/commands",               cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, commandsRouter);
+APP.use("/guild/:guildId/language",               cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, languageRouter);
+APP.use("/guild/:guildId/defaultLanguage/save",   cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, checkIfLanguageExists, saveDefaultLanguage);
+APP.use("/guild/:guildId/channelLanguage/save",   cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, checkIfChannelExists,  checkIfLanguageExists, saveChannelLanguage);
+APP.use("/guild/:guildId/channelLanguage/delete", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, checkIfChannelExists,  checkIfLanguageExists, deleteChannelLanguage);
+APP.use("/guild/:guildId/rss",                    cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, rssRouter);
+APP.use("/guild/:guildId/server",                 cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, serverRouter);
+APP.use("/guild/:guildId/twitter",                cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, twitterRouter);
+APP.use(`${OAUTH2_REDIRECT_URI}`,                 cleanVariableSession, grantDiscord,  identifyUser,        dashboardRedirect);
+APP.use("/login",                                 cleanVariableSession, login);
+APP.use("/logout",                                cleanVariableSession, logout);
+APP.use('/testing',                               async (req, res, next) => next(new Error('Something broke! 😱')));
+APP.use("/",                                      cleanVariableSession, indexRouter);
 APP.use(ERROR_HANDLER.notFound);
 APP.use(ERROR_HANDLER.internalError);
 

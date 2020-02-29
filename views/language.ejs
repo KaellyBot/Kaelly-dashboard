@@ -11,7 +11,7 @@
                 </div>
                 <form action="<%=`/guild/${guild.id}/defaultLanguage/save` %>" method="POST">
                     <div class="input-field col s12 l10">
-                        <select id="defaultLanguage" name="defaultLanguage" class="icons">
+                        <select id="defaultLanguage" name="languageId" class="icons">
                             <option value="FR" data-icon="/img/FR.png">Français</option>
                             <option value="EN" data-icon="/img/EN.png">English</option>
                             <option value="ES" data-icon="/img/ES.png">Español</option>
@@ -23,43 +23,14 @@
                             <i class="material-icons left">update</i>Update
                         </button>
                     </div>
-                </form>
+                </form>     
+            </div>
 
-                
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <h2 class="header2 grey-text text-darken-3">Language specified per channel</h2>
-                </div>
-                <div class="col s12">
-                    <table class="highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th>Channel Name</th>
-                                <th>Language</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Channel 1</td>
-                                <td>Français</td>
-                                <td class="right-align">
-                                    <a href="<%=`/guild/${guild.id}/languageChannel/delete` %>" class="waves-effect waves-light btn-small grey darken-2">
-                                        Delete
-                                        <i class="material-icons left">clear</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                        </table>
-                </div>
-            </div>
             <div class="row">
                 <div class="col s12">
                     <h2 class="header2 grey-text text-darken-3">Specify a language for a channel</h2>
                 </div>
-                <form action="<%=`/guild/${guild.id}/languageChannel/add` %>" method="POST">
+                <form action="<%=`/guild/${guild.id}/channelLanguage/save` %>" method="POST">
                     <div class="input-field col s12 l5">
                         <select id="channelId" name="channelId" class="validate" required>
                             <option value="" disabled selected>Choose a channel</option>
@@ -84,6 +55,35 @@
                         </button>
                     </div>
                 </form>
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <h2 class="header2 grey-text text-darken-3">Language specified per channel</h2>
+                </div>
+                <div class="col s12">
+                    <table class="highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Channel Name</th>
+                                <th>Language</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Channel 1</td>
+                                <td>Français</td>
+                                <td class="right-align">
+                                    <a href="<%=`/guild/${guild.id}/channelLanguage/delete` %>" class="waves-effect waves-light btn-small grey darken-2">
+                                        Delete
+                                        <i class="material-icons left">clear</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                </div>
             </div>
         </div>
     </body>
