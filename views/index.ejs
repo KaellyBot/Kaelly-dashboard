@@ -1,17 +1,19 @@
 <html>
     <%- include('partials/head') %>
     <body>
-        <%- include('partials/nav', {user: locals.user ? user : null }) %>
-        <div class="container">
-            <div class="row">
-                <div class="col s12">
-                    <h1 class="header grey-text text-darken-3 title">The only Discord Bot for Dofus!</h1>
-                    <!--<img class="responsive-img" src="/img/emeraude.png"/>-->
-                    <img class="responsive-img" src="/img/kaellyFull.png"/>
+        <%- include('partials/header', {user: locals.user ? user : null }) %>
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <h1 class="header grey-text text-darken-3 title">The only Discord Bot for Dofus!</h1>
+                        <!--<img class="responsive-img" src="/img/emeraude.png"/>-->
+                        <img class="responsive-img" src="/img/kaellyFull.png"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <%- include('partials/footer') %>
     </body>
-    <%- include('partials/footer') %>
     <%- include('partials/scripts') %>
 </html>

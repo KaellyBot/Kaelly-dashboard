@@ -1,20 +1,22 @@
 <html>
     <%- include('partials/head') %>
     <body>
-        <%- include('partials/nav', {user: locals.user ? user : null }) %>
-        <div class="container">
-            <div class="row">
-                <div class="col s12 center-align">
-                    <h1 class="header grey-text text-darken-3 title">Please select a server</h1>
-                    <div class="divider"></div>
+        <%- include('partials/header', {user: locals.user ? user : null }) %>
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12 center-align">
+                        <h1 class="header grey-text text-darken-3 title">Please select a server</h1>
+                        <div class="divider"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <% guilds.forEach(function(guild) { %>
+                        <%- include('partials/guildOverview', {guild: guild }) %>
+                    <% }) %>
                 </div>
             </div>
-            <div class="row">
-                <% guilds.forEach(function(guild) { %>
-                    <%- include('partials/guildOverview', {guild: guild }) %>
-                <% }) %>
-            </div>
-        </div>
+        </main>  
     </body>
     <%- include('partials/scripts') %>
 </html>

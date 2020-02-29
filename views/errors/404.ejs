@@ -1,16 +1,19 @@
 <html>
     <%- include('../partials/head') %>
     <body>
-        <%- include('../partials/nav', {user: locals.user ? user : null }) %>
-        <div class="container">
-            <div class="row">
-                <div class="col s12">
-                    <h1 class="header">404 - Not Found</h1>
-                    <h2 class="header">Sorry, this page does not exist!</h2>
+        <%- include('../partials/header', {user: locals.user ? user : null }) %>
+        <main>
+            <div class="container">
+                <div class="row">
+                    <div class="col s12">
+                        <h1 class="header">404 - Not Found</h1>
+                        <h2 class="header">Sorry, this page does not exist!</h2>
+                    </div>
                 </div>
             </div>
-        </div>
+        </main>
+        <%- include('../partials/footer') %>
     </body>
-    <%- include('../partials/footer') %>
+    
     <%- include('../partials/scripts') %>
 </html>

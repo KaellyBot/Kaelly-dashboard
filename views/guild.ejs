@@ -1,18 +1,20 @@
 <html>
     <%- include('partials/head') %>
     <body>
-        <%- include('partials/nav', {user: locals.user ? user : null }) %>
-        <div class="container">
-            <%- include('partials/settingTitle', {guild: guild, setting : { title: guild.name, backUrl:'/dashboard'} }) %>
-            <div class="row">
-                <%- include('partials/settingOverview', {setting: { id: 'commands', name: 'Commands',     icon: '/img/commands.png', url: `/guild/${guild.id}/commands`}}) %>
-                <%- include('partials/settingOverview', {setting: { id: 'language', name: 'Language',     icon: '/img/language.png', url: `/guild/${guild.id}/language`}}) %>
-                <%- include('partials/settingOverview', {setting: { id: 'almanax',  name: 'Almanax',      icon: '/img/almanax.png',  url: `/guild/${guild.id}/almanax`}}) %>
-                <%- include('partials/settingOverview', {setting: { id: 'server',   name: 'Dofus Server', icon: '/img/server.png',   url: `/guild/${guild.id}/server`}}) %>
-                <%- include('partials/settingOverview', {setting: { id: 'twiter',   name: 'Twitter',      icon: '/img/twitter.png',  url: `/guild/${guild.id}/twitter`}}) %>
-                <%- include('partials/settingOverview', {setting: { id: 'rss',      name: 'RSS Feeds',    icon: '/img/rss.png',      url: `/guild/${guild.id}/rss`}}) %>
+        <%- include('partials/header', {user: locals.user ? user : null }) %>
+        <main>
+            <div class="container">
+                <%- include('partials/settingTitle', {guild: guild, setting : { title: guild.name, backUrl:'/dashboard'} }) %>
+                <div class="row">
+                    <%- include('partials/settingOverview', {setting: { id: 'commands', name: 'Commands',     icon: '/img/commands.png', url: `/guild/${guild.id}/commands`}}) %>
+                    <%- include('partials/settingOverview', {setting: { id: 'language', name: 'Language',     icon: '/img/language.png', url: `/guild/${guild.id}/language`}}) %>
+                    <%- include('partials/settingOverview', {setting: { id: 'almanax',  name: 'Almanax',      icon: '/img/almanax.png',  url: `/guild/${guild.id}/almanax`}}) %>
+                    <%- include('partials/settingOverview', {setting: { id: 'server',   name: 'Dofus Server', icon: '/img/server.png',   url: `/guild/${guild.id}/server`}}) %>
+                    <%- include('partials/settingOverview', {setting: { id: 'twiter',   name: 'Twitter',      icon: '/img/twitter.png',  url: `/guild/${guild.id}/twitter`}}) %>
+                    <%- include('partials/settingOverview', {setting: { id: 'rss',      name: 'RSS Feeds',    icon: '/img/rss.png',      url: `/guild/${guild.id}/rss`}}) %>
+                </div>
             </div>
-        </div>
+        </main>
     </body>
     <%- include('partials/scripts') %>
 </html>
