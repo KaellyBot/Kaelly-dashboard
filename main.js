@@ -100,7 +100,8 @@ var loadDiscordData = (req, res, next) =>
 				let guildDataFromBot = DISCORD_CLIENT.guilds.get(guild.id);
 				guild.connected = guildDataFromBot ? true : false;
 				guild.channels = guild.connected ? Array.from(guildDataFromBot.channels.values())
-															.filter(DISCORD_UTILITY.IS_GUILD_TEXT) : [];				
+					.filter(DISCORD_UTILITY.IS_GUILD_TEXT)
+					.sort((channel1, channel2) => channel1.position - channel2.position) : [];
 			});
 			next();
 		})
@@ -166,6 +167,7 @@ var logout = (req, res, next) =>
 		res.redirect('/');
 	  });
 
+// Routes
 APP.use("/dashboard",                             cleanVariableSession, checkLoggedIn, loadDiscordData,     dashboardRouter);
 APP.use("/guild/:guildId",                        cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, guildRouter);
 APP.use("/guild/:guildId/almanax",                cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, almanaxRouter);
@@ -180,7 +182,6 @@ APP.use("/guild/:guildId/twitter",                cleanVariableSession, checkLog
 APP.use(`${OAUTH2_REDIRECT_URI}`,                 cleanVariableSession, grantDiscord,  identifyUser,        dashboardRedirect);
 APP.use("/login",                                 cleanVariableSession, login);
 APP.use("/logout",                                cleanVariableSession, logout);
-APP.use('/testing',                               async (req, res, next) => next(new Error('Something broke! 😱')));
 APP.use("/",                                      cleanVariableSession, indexRouter);
 APP.use(ERROR_HANDLER.notFound);
 APP.use(ERROR_HANDLER.internalError);
