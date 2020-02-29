@@ -9,7 +9,7 @@
                 <div class="col s12">
                     <h2 class="header2 grey-text text-darken-3">Select the language used by default</h2>
                 </div>
-                <form action="<%=`/guild/${guild.id}/defaultLanguage/update` %>" method="POST">
+                <form action="<%=`/guild/${guild.id}/defaultLanguage/save` %>" method="POST">
                     <div class="input-field col s12 l10">
                         <select id="defaultLanguage" name="defaultLanguage" class="icons">
                             <option value="FR" data-icon="/img/FR.png">Français</option>
@@ -87,5 +87,5 @@
             </div>
         </div>
     </body>
-    <%- include('partials/scripts') %>
+    <%- include('partials/scripts', {success: locals.success ? success : null }) %>
 </html>

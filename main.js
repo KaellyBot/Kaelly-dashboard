@@ -10,6 +10,7 @@ const AXIOS = require('axios');
 const HELMET = require('helmet');
 const MORGAN = require('morgan');
 const SESSION = require('express-session');
+const BODY_PARSER = require('body-parser');
 const APP = EXPRESS();
 
 // Environment variables
@@ -45,6 +46,8 @@ var twitterRouter = require('./routes/guild/twitter');
 APP.use(EXPRESS.static(PATH.join(__dirname, 'public')));
 APP.set('view engine', 'ejs');
 APP.set('trust proxy', 1);
+APP.use(BODY_PARSER.urlencoded({extended: true}));
+APP.use(BODY_PARSER.json());
 APP.use(HELMET());
 APP.use(MORGAN(MORGAN_LEVEL));
 APP.use(SESSION({
@@ -106,6 +109,18 @@ var loadDiscordData = (req, res, next) =>
 			console.error(error);
 		});
 
+var cleanVariableSession = (req, res, next) => {
+	if (req.session.success){
+		res.locals.success = req.session.success;
+		req.session.success = null;
+	}
+	if (req.session.error){
+		res.locals.error = req.session.error;
+		req.session.error = null;
+	}
+	next();
+}
+
 var checkLoggedIn = (req, res, next) => req.session.loggedIn ? next() : res.redirect("/login");
 
 var checkIfUserHasGuild = (req, res, next) => req.session.guilds
@@ -116,6 +131,15 @@ var checkIfGuildIsConnected = (req, res, next) => req.session.guilds
 	.filter(guild => guild.id === req.params.guildId)[0].connected ? 
 	next() : ERROR_HANDLER.notFound(req, res, next);
 
+// TODO
+var checkIfDefaultLanguageExists = (req, res, next) => next();
+
+// TODO
+var saveDefaultLanguage = (req, res, next) => {
+	req.session.success = `The default Language is now ${req.body.defaultLanguage}.`
+	res.redirect(`/guild/${req.params.guildId}/language`);
+};
+
 var logout = (req, res, next) =>
 	req.session.destroy(function(err) {
 		if (err) {
@@ -125,19 +149,20 @@ var logout = (req, res, next) =>
 		res.redirect('/');
 	  });
 
-APP.use("/dashboard", checkLoggedIn, loadDiscordData, dashboardRouter);
-APP.use("/guild/:guildId", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, guildRouter);
-APP.use("/guild/:guildId/almanax", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, almanaxRouter);
-APP.use("/guild/:guildId/commands", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, commandsRouter);
-APP.use("/guild/:guildId/language", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, languageRouter);
-APP.use("/guild/:guildId/rss", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, rssRouter);
-APP.use("/guild/:guildId/server", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, serverRouter);
-APP.use("/guild/:guildId/twitter", checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, twitterRouter);
-APP.use(`${OAUTH2_REDIRECT_URI}`, grantDiscord, identifyUser, dashboardRedirect);
-APP.use("/login", login);
-APP.use("/logout", logout);
+APP.use("/dashboard", cleanVariableSession, checkLoggedIn, loadDiscordData, dashboardRouter);
+APP.use("/guild/:guildId", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, guildRouter);
+APP.use("/guild/:guildId/almanax", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, almanaxRouter);
+APP.use("/guild/:guildId/commands", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, commandsRouter);
+APP.use("/guild/:guildId/language", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, languageRouter);
+APP.use("/guild/:guildId/defaultLanguage/save", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, checkIfDefaultLanguageExists, saveDefaultLanguage);
+APP.use("/guild/:guildId/rss", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, rssRouter);
+APP.use("/guild/:guildId/server", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, serverRouter);
+APP.use("/guild/:guildId/twitter", cleanVariableSession, checkLoggedIn, checkIfUserHasGuild, checkIfGuildIsConnected, twitterRouter);
+APP.use(`${OAUTH2_REDIRECT_URI}`, cleanVariableSession, grantDiscord, identifyUser, dashboardRedirect);
+APP.use("/login", cleanVariableSession, login);
+APP.use("/logout", cleanVariableSession, logout);
 APP.use('/testing', async (req, res, next) => next(new Error('Something broke! 😱')));
-APP.use("/", indexRouter);
+APP.use("/", cleanVariableSession, indexRouter);
 APP.use(ERROR_HANDLER.notFound);
 APP.use(ERROR_HANDLER.internalError);
 
