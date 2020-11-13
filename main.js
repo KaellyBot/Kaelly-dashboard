@@ -67,10 +67,8 @@ var login = (req, res, next) =>
 				+ `&scope=identify+guilds+email`);
 
 var grantDiscord = (req, res, next) =>
-	AXIOS.post(`${TOKEN_URL}?grant_type=authorization_code`
-				+ `&code=${req.query.code}`
-				+ `&redirect_uri=${HOST}:${PORT}${OAUTH2_REDIRECT_URI}`, {}, 
-			{headers: {'Authorization': `Basic ${KAELLY_DASHBOARD_TOKEN}`}})
+	AXIOS.post(`${TOKEN_URL}`, `grant_type=authorization_code&code=${req.query.code}&redirect_uri=${HOST}:${PORT}${OAUTH2_REDIRECT_URI}`, 
+			{headers: {'Authorization': `Basic ${KAELLY_DASHBOARD_TOKEN}`, 'Content-Type': 'application/x-www-form-urlencoded'}})
 		.then(response => {
 			req.session.loggedIn = true;
 			req.session.access_token = response.data.access_token;
@@ -97,9 +95,9 @@ var loadDiscordData = (req, res, next) =>
         .then(response => {
 			req.session.guilds = response.data.filter(DISCORD_UTILITY.HAS_USER_GET_ADMIN_PERMISSION);
 			req.session.guilds.forEach(guild => {
-				let guildDataFromBot = DISCORD_CLIENT.guilds.get(guild.id);
+				let guildDataFromBot = DISCORD_CLIENT.guilds.cache.get(guild.id);
 				guild.connected = guildDataFromBot ? true : false;
-				guild.channels = guild.connected ? Array.from(guildDataFromBot.channels.values())
+				guild.channels = guild.connected ? Array.from(guildDataFromBot.channels.cache.values())
 					.filter(DISCORD_UTILITY.IS_GUILD_TEXT)
 					.sort((channel1, channel2) => channel1.position - channel2.position) : [];
 			});
